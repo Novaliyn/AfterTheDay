@@ -1,3 +1,3 @@
 extends Node
 
-signal Test
+signal changeLevel()
