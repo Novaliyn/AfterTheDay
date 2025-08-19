@@ -17,5 +17,6 @@ mono_crash.*.json
 
 /export
 /addons
+/assets/blender
 .gitattributes
 .editorconfig
