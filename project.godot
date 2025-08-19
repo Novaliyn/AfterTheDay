@@ -11,5 +11,15 @@ config_version=5
 [application]
 
 config/name="AfterTheDay"
+run/main_scene="uid://cp7a681gckcgg"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Main="*res://scripts/main.gd"
+Signaler="*res://scripts/signaler.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
