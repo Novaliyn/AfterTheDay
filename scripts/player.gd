@@ -1,33 +1,48 @@
-extends RigidBody3D
+extends CharacterBody3D
 
-@onready var twist: Node3D = $Twist
-@onready var pitch: Node3D = $Twist/Pitch
-#@onready var player: RigidBody3D = $"."
+
+const SPEED = 5.0
+const JUMP_VELOCITY = 4.5
+
+@onready var pitch: Node3D = $Pitch
+@onready var player: CharacterBody3D = $"."
 
 var sensitivity := 0.001
 var inputTwist := 0.0
 var inputPitch := 0.0
 
+
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	
-func _process(delta: float) -> void:
-	var input := Vector3.ZERO
-	input.x = Input.get_axis("LEFT", "RIGHT")
-	input.z = Input.get_axis("FORWARD", "BACK")
-	
-	apply_central_force(twist.basis * input * 1200.0 * delta)
 
+func _physics_process(delta: float) -> void:
+	# Add the gravity.
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+
+	# Handle jump.
+	if Input.is_action_just_pressed("JUMP") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+
+	# Get the input direction and handle the movement/deceleration.
+	# As good practice, you should replace UI actions with custom gameplay actions.
+	var input_dir := Input.get_vector("LEFT", "RIGHT", "FORWARD", "BACK")
+	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	if direction:
+		velocity.x = direction.x * SPEED
+		velocity.z = direction.z * SPEED
+	else:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.z = move_toward(velocity.z, 0, SPEED)
+		
 	if Input.is_action_just_pressed("EXIT"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	
-	#player.rotate_y(inputTwist)
-	twist.rotate_y(inputTwist)
+	player.rotate_y(inputTwist)
 	pitch.rotate_x(inputPitch)
-	pitch.rotation.x = clamp(pitch.rotation.x, deg_to_rad(-30), deg_to_rad(30))
+	pitch.rotation.x = clamp(pitch.rotation.x, deg_to_rad(-60), deg_to_rad(30))
+	move_and_slide()
 	inputPitch = 0
 	inputTwist = 0
-	
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
