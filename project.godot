@@ -12,7 +12,7 @@ config_version=5
 
 config/name="AfterTheDay"
 run/main_scene="uid://cp7a681gckcgg"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 boot_splash/image="uid://uw6r4pw0o368"
 config/icon="res://icon.svg"
 

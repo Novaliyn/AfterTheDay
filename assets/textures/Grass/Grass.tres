@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://cnj1bjejay1km" path="res://assets/textures/Grass/Grass001_1K-PNG_Roughness.png" id="4_smypn"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_fxey0"]
-load_path = "res://.godot/imported/Grass001_1K-PNG_Displacement.png-3c505a33f70685bcb934aac285aa3e0d.s3tc.ctex"
 
 [resource]
 albedo_texture = ExtResource("1_asnur")
